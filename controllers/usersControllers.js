@@ -26,17 +26,27 @@ const createUser = async (req,res,next) => {
     
         let {firstName,lastName,email,password} = req.body
         
-        let myPasswordEncrypt = await encrypt(password) 
-
-        let myUser = await User.create({
-            firstName : firstName,
-            lastName : lastName,
-            email : email,
-            password : myPasswordEncrypt,
-            roleId : 2
+        let myUser = await User.findOne({
+            where:{email}
         })
-    
-        return res.json(myUser)
+
+        let myPasswordEncrypt = await encrypt(password) 
+        
+        if(myUser != null){
+            return res.status(400).send({errors:'The email already register.'})
+        }else{
+            let myNewUser = await User.create({
+                firstName : firstName,
+                lastName : lastName,
+                email : email,
+                password : myPasswordEncrypt,
+                roleId : 2
+            })
+        
+            return res.json(myNewUser)
+        }
+        
+
     }catch(err){
         console.log(err)
     }
