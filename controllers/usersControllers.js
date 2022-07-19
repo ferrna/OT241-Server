@@ -42,7 +42,7 @@ const createUser = async (req,res,next) => {
                 password : myPasswordEncrypt,
                 roleId : 2
             })
-        
+            delete myNewUser.password
             return res.json(myNewUser)
         }
         
@@ -60,6 +60,7 @@ const getOneUser = async (req,res,next) => {
         }
 
         let {email, password} = req.body
+       
         let myUser = await User.findOne({
             where:{email}
         })
@@ -71,7 +72,7 @@ const getOneUser = async (req,res,next) => {
         }
         
         if(checkPassword){
-            let myToken = createToken()
+            let myToken = createToken(email)
             res.json({
                 data: myUser,
                 token: myToken

@@ -16,8 +16,9 @@ verification.use((req,res,next) => {
     }
     if(token){
         jwt.verify(token,process.env.PASSWORD_TOKEN,(error,decoded)=>{
-            if(error) return res.json({message:'token no es valido'})
-            else{
+            if(error){
+                return res.json({message:'token no es valido'})
+            }else{
                 req.decoded = decoded
                 next()
             }
