@@ -16,5 +16,23 @@ const findNewsById = async (id) => {
     }
 }
 
+const findEntryByTypeNews = async () => {
+  try {
+     const type = await Entries.findAll({
+          where: {
+            type: "news"
+          }
+        })
 
-module.exports = {findNewsById}
+      const typeMap = type.map((item) => {
+          return {name: item.name, image: item.image, createdAt: item.createdAt}
+      })
+
+        return typeMap
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+
+module.exports = {findNewsById, findEntryByTypeNews}

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {findNewsById} = require('../controllers/entriesController')
+const {findNewsById, findEntryByTypeNews} = require('../controllers/entriesController')
 
 router
     .route('/:id')
@@ -8,6 +8,18 @@ router
         const { id } = req.params
         const news = await findNewsById(id)
         res.send({news})
+    })
+
+router
+    .route('/')
+    .get(async(req, res) => {
+        try {
+            const type = await findEntryByTypeNews()
+            res.send(type)
+            
+        } catch (error) {
+            console.log(error)
+        }
     })
 
 
