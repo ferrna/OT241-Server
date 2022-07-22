@@ -61,7 +61,7 @@ const getOneUser = async (req,res,next) => {
         }
         
         if(checkPassword){
-            let myToken = createToken()
+            let myToken = createToken(myUser.dataValues.id);
             res.json({
                 data: myUser,
                 token: myToken
