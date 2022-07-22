@@ -1,5 +1,5 @@
 var express = require('express');
-const {getAllUsers,createUser,getOneUser} = require('../controllers/usersControllers');
+const {getAllUsers,createUser,getOneUser, deleteUser} = require('../controllers/usersControllers');
 var router = express.Router();
 let verification = express.Router()
 let jwt = require('jsonwebtoken')
@@ -66,5 +66,19 @@ router.get('/auth/login',verification,(req,res)=>{
 router.get('/organizations',verification,(req,res)=>{
     res.send('hola')
 })
+
+router
+    .route('/:id')
+    .delete(async(req, res) => {
+        try {
+            const {id} = req.params
+            await deleteUser(id)
+            res.send({message: `Usuario con id: ${id} ha sido exitosamente borrado`})
+            
+        } catch (error) {
+            console.log(error)
+        }
+        
+    })
 
 module.exports = router;
