@@ -61,7 +61,7 @@ const getOneUser = async (req,res,next) => {
         }
         
         if(checkPassword){
-            let myToken = createToken()
+            let myToken = createToken(myUser.dataValues.id);
             res.json({
                 data: myUser,
                 token: myToken
@@ -77,8 +77,22 @@ const getOneUser = async (req,res,next) => {
     }
 }
 
+const deleteUser = async (id) => {
+    try {
+        const borrado = await User.destroy({
+            where: {
+                id: id
+            }
+        })
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getAllUsers,
     createUser,
-    getOneUser
+    getOneUser,
+    deleteUser
 }
