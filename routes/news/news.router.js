@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { postNews } = require("./controllers/post.controller");
-const { getNews } = require("./controllers/get.controller");
+const { getNewsId, getNews } = require("./controllers/get.controller");
 
-const news = Router();
+const newsRouter = Router();
 
-news.route("/").post(postNews);
-news.use("/", getNews);
+newsRouter.route("/").post(postNews);
+newsRouter.route("/:id").get(getNewsId);
+newsRouter.route("/").get(getNews);
 
-module.exports = news;
+module.exports = newsRouter;
