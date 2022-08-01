@@ -34,5 +34,18 @@ const findEntryByTypeNews = async () => {
   }
 }
 
+const deleteNewsById = (id) => {
+  try {
+    const borrado = await Entries.destroy({
+        where: {
+            id: id
+        }
+    })
+    
+} catch (error) {
+    console.log(error)
+}
+}
 
-module.exports = {findNewsById, findEntryByTypeNews}
+
+module.exports = {findNewsById, findEntryByTypeNews, deleteNewsById}

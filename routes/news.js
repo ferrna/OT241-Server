@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {findNewsById, findEntryByTypeNews} = require('../controllers/entriesController')
+const {findNewsById, findEntryByTypeNews, deleteNewsById} = require('../controllers/entriesController')
 
 router
     .route('/:id')
@@ -8,6 +8,11 @@ router
         const { id } = req.params
         const news = await findNewsById(id)
         res.send({news})
+    })
+    .delete(async(req, res) => {
+        const { id } = req.params
+        const deleteNews = await deleteNewsById(id)
+        res.send(deleteNews)
     })
 
 router
