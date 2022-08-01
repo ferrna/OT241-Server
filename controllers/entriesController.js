@@ -34,7 +34,7 @@ const findEntryByTypeNews = async () => {
   }
 }
 
-const deleteNewsById = (id) => {
+const deleteNewsById = async (id) => {
   try {
     const borrado = await Entries.destroy({
         where: {
