@@ -1,9 +1,10 @@
 require('dotenv').config()
+const fs = require('fs')
 const S3 = require("aws-sdk/clients/s3")
 
 
 //accesos desde el ENV
-const bucket = process.env.AWS_BUCKET_NAME
+const bucketName = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY
 const secretAccessKey = process.env.AWS_SECRET_KEY
@@ -15,7 +16,33 @@ const s3 = new S3({
 
 })
 
-//funciones para subir archivos al S3 de Amazon Web Services
+//funcion para subir archivos al S3 de Amazon Web Services
+const uploadImageS3 = file => {
+    const fileStream = fs.createReadStream(file.path)
 
+    const uploadParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+    }
+
+    return s3.upload(uploadParams).promise()
+}
+
+
+//funcion para ver imagen de S3
+const getImageFromS3 = filekey => {
+    const downloadParams = {
+        Key: filekey,
+        Bucket: bucketName
+    }
+
+    return s3.getObject(downloadParams).createReadStream()
+}
 
 //exportar funciones
+
+module.exports = {
+    uploadImageS3,
+    getImageFromS3
+}
