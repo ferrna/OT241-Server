@@ -7,6 +7,6 @@ const {
   createTestimonial
 } = controller;
 
-router.post('/testimonials', createTestimonial);
+router.post('/', createTestimonial);
 
 module.exports = router;
