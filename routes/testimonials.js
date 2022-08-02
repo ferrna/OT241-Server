@@ -8,5 +8,6 @@ const {
 } = controller;
 
 router.post('/', createTestimonial);
+router.put('/:id');
 
 module.exports = router;
