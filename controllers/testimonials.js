@@ -42,6 +42,9 @@ const updateTestimonial = async (req,res) => {
         id: req.params.id
       }
     })
+    if (newTestimonial[0] === 0) {  //Caso en que el ID no exista (Sequelize retorna un array con el numero de rows afectadas)
+      return res.status(404).json("There's not a testimonial with the specified ID")
+    }
     return res.json(newTestimonial)
   } catch(err){
     if (err.errors[0].validatorKey === "notEmpty") {
@@ -64,7 +67,6 @@ const updateTestimonial = async (req,res) => {
       }
     } else {
       return res.status(400).json(err)
-      console.log(err)
     }
   }
 }
