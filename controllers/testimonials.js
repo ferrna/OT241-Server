@@ -35,6 +35,23 @@ const createTestimonial = async (req,res) => {
   }
 }
 
+const deleteTestimonial = async (req,res) => {
+  try {
+    const deletedTestimonial = await Testimonials.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    if (deletedTestimonial === 0) {  //Caso en que el ID no exista (Sequelize retorna el numero de rows afectadas)
+      return res.status(404).json("There's not a testimonial with the specified ID")
+    }
+    return res.json("Deleted succesfully")
+  } catch(err) {
+      return res.status(400).json(err)
+    }
+}
+
 module.exports = {
-  createTestimonial
+  createTestimonial,
+  deleteTestimonial
 }
