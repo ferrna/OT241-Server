@@ -5,7 +5,7 @@ let { body, validationResult } = require("express-validator");
 
 const findNewsById = async (id) => {
   try {
-    const news = await Entries.findOne({
+    const news = await Entries.findAll({
       where: {
         id: id,
       },
