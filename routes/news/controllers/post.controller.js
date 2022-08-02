@@ -1,5 +1,5 @@
 let { body } = require("express-validator");
-const { createEntry } = require("../../../controllers/entriesControllers");
+const { createEntry } = require("../../../controllers/entriesController");
 
 const typeMiddleware = async (req, res, next) => {
   req.body.type = "news";
