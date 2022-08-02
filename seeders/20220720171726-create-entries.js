@@ -1,4 +1,6 @@
 "use strict";
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -29,6 +31,17 @@ module.exports = {
         },
         {
           name: "Noticia demo tres",
+          content:
+            "Demo Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur deserunt repudiandae natus libero ab. Vel dolor doloribus assumenda minus.",
+          /* categoryId: 1, */
+          type: "news",
+          image:
+            "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "Noticia demo cuatro",
           content:
             "Demo Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur deserunt repudiandae natus libero ab. Vel dolor doloribus assumenda minus.",
           /* categoryId: 1, */

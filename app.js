@@ -9,10 +9,10 @@ require("dotenv").config();
 const indexRouter = require("./routes/index");
 // TODO: Descomentar la siguiente línea cuando la autenticación esté completa
 // const authRouter = require('./routes/auth')
-const usersRouter = require("./routes/users");
-const organizationRouter = require("./routes/organizations");
-const imageRouter = require("./routes/images");
-const newsRouter = require("./routes/news");
+// const usersRouter = require("./routes/users");
+// const organizationRouter = require("./routes/organizations");
+// const imageRouter = require("./routes/images");
+// const newsRouter = require("./routes/news/news.router");
 const contactsRouter = require("./routes/contacts")
 
 const app = express();
@@ -31,10 +31,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 // TODO: Descomentar la siguiente línea cuando la autenticación esté completa
 // app.use('/auth', authRouter)
-app.use("/users", usersRouter);
-app.use("/organizations", organizationRouter);
-app.use("/images", imageRouter);
-app.use("/news", newsRouter);
+// app.use("/users", usersRouter);
+// app.use("/organizations", organizationRouter);
+// app.use("/images", imageRouter);
+// app.use("/news", newsRouter);
 app.use("/contacts", contactsRouter)
 
 // catch 404 and forward to error handler
