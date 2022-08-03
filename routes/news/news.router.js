@@ -1,8 +1,36 @@
 const { Router } = require("express");
 const { postNews } = require("./controllers/post.controller");
+const {
+  findNewsById,
+  deleteNewsById,
+  findEntryByTypeNews,
+} = require("../../controllers/entriesController");
 
-const news = Router();
+const newsRouter = Router();
 
-news.route("/").post(postNews);
+newsRouter
+  .route("/:id")
+  .get(async (req, res) => {
+    const { id } = req.params;
+    const news = await findNewsById(id);
+    res.send({ news });
+  })
+  .delete(async (req, res) => {
+    const { id } = req.params;
+    const deleteNews = await deleteNewsById(id);
+    res.send(deleteNews);
+  });
 
-module.exports = news;
+newsRouter
+  .route("/")
+  .get(async (req, res) => {
+    try {
+      const type = await findEntryByTypeNews();
+      res.send(type);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  .post(postNews);
+
+module.exports = newsRouter;
