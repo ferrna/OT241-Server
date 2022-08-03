@@ -1,19 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const { addContacts } = require("../controllers/contactsController")
 
 router
     .route("/")
-    .post((req, res) => {
+    .post( async (req, res) => {
         const {name, email} = req.body
         if (name && email) {
-            //add to db logic
-
-            
-            res.send ({
-                name: name,
-                email: email,
-                message: "se ingresaron a la db los datos de contacto"
-
+            const newContact = await addContacts(name, email)
+            res.send({
+                newContact,
+                message: "Se ha agregado un nuevo contacto",
             })
         }else {
             res.send({
