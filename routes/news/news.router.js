@@ -4,6 +4,7 @@ const {
   findNewsById,
   deleteNewsById,
   findEntryByTypeNews,
+  updateEntry
 } = require("../../controllers/entriesController");
 
 const newsRouter = Router();
@@ -19,7 +20,8 @@ newsRouter
     const { id } = req.params;
     const deleteNews = await deleteNewsById(id);
     res.send(deleteNews);
-  });
+  })
+  .put(updateEntry);
 
 newsRouter
   .route("/")

@@ -73,7 +73,7 @@ const createEntry = async (req, res, next) => {
   }
 };
 
-const updateEntry = () => {
+const updateEntry = (req,res) => {
   Entries.update({ ...req.body }, {
     where: {
       id: req.params.id
