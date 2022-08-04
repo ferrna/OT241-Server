@@ -29,14 +29,18 @@ const updateActivity =  (req, res, next) => {
   })
   .then((update) => {
     if (update[0] === 0) {
-      throw err
-      //return res.status(400).json('There is not an activity with that ID')
+      const error = 'There is not an activity with that ID'
+      throw error
     } else {
-      return res.json(activities.findByPk(req.params.id))
+      const activity = activities.findByPk(req.params.id)
+      return activity
     }
   })
-  .catch(() => {
-    return res.status(400).json('There is not an activity with that ID')
+  .then((activity) => {
+    return res.json(activity)
+  })
+  .catch((error) => {
+    return res.status(400).json(error)
   })
 };
 
