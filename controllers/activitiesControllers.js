@@ -1,4 +1,4 @@
-let { Activitiy } = require("../models");
+let { activities } = require("../models");
 let { body, validationResult } = require("express-validator");
 
 const createActivity = async (req, res, next) => {
@@ -10,7 +10,7 @@ const createActivity = async (req, res, next) => {
 
     let { name, content } = req.body;
 
-    let myActivity = await Activity.create({
+    let myActivity = await activities.create({
       name: name,
       content: content,
     });
@@ -21,6 +21,18 @@ const createActivity = async (req, res, next) => {
   }
 };
 
+const findActivityById = async(id) => {
+  const activityById = await activities.findAll({
+    where: {
+      id: id
+    }
+  })
+
+  return activityById
+
+}
+
 module.exports = {
   createActivity,
+  findActivityById
 };
