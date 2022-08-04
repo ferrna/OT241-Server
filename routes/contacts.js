@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { addContacts, getContacts } = require("../controllers/contactsController");
 const isAdmin = require("./common/isAdmin");
+const axios = require("axios")
 
 
 router
@@ -10,9 +11,11 @@ router
         const {name, email} = req.body
         if (name && email) {
             const newContact = await addContacts(name, email)
+            const {data} = await axios.post(`http://localhost:3000/mails/${email}`)
             res.send({
                 newContact,
                 message: "Se ha agregado un nuevo contacto",
+                mailResponse: data
             })
         }else {
             res.send({
