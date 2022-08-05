@@ -10,6 +10,12 @@ const addContacts =  async (name, email) => {
 
 }
 
+const getContacts = async () => {
+  const allContacts = await Contacts.findAll();
+  return allContacts
+}
+
 module.exports = {
     addContacts,
+    getContacts
   };
