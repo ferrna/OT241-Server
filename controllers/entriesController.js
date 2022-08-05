@@ -73,4 +73,27 @@ const createEntry = async (req, res, next) => {
   }
 };
 
-module.exports = { findNewsById, findEntryByTypeNews, deleteNewsById, createEntry };
+const updateEntry = (req,res) => {
+  Entries.update({ ...req.body }, {
+    where: {
+      id: req.params.id
+    }
+  })
+  .then((update) => {
+    if (update[0] === 0) {
+      const error = 'There is not an entry with that ID'
+      throw error
+    } else {
+      const entry = Entries.findByPk(req.params.id)
+      return entry
+    }
+  })
+  .then((entry) => {
+    return res.json(entry)
+  })
+  .catch((error) => {
+    return res.status(400).json(error)
+  })
+}
+
+module.exports = { findNewsById, findEntryByTypeNews, deleteNewsById, createEntry, updateEntry };
