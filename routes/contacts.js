@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { addContacts } = require("../controllers/contactsController")
+const { addContacts, getContacts } = require("../controllers/contactsController");
+const isAdmin = require("./common/isAdmin");
 const axios = require("axios")
+
 
 router
     .route("/")
@@ -21,6 +23,14 @@ router
             })
         }
 
+    })
+    .get(isAdmin, async(req, res) => {
+        try {
+            const result = await getContacts()
+            res.send(result)
+        } catch (e) {
+            console.log(e)
+        }
     })
 
 
