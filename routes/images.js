@@ -13,6 +13,7 @@ router
 
         try {
             const file = req.file
+            console.log(file)
             const info = req.body
             const result = await uploadImageS3(file)
             res.send({

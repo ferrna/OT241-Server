@@ -7,6 +7,7 @@ const organization = require("./organizations");
 const testimonials = require("./testimonials");
 const images = require("./images");
 const activities = require("./activities/activities.router");
+const members =  require("./members")
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -19,5 +20,6 @@ router.use("/organization", organization);
 router.use("/testimonials", testimonials);
 router.use("/images", images);
 router.use("/activities", activities);
+router.use("/members", members);
 
 module.exports = router;
