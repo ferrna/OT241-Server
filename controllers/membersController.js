@@ -12,6 +12,12 @@ const addMember =  async (name, image) => {
 
 }
 
+const getMembers = async () => {
+    const allMembers = await members.findAll();
+    return allMembers
+  }
+
 module.exports = {
-    addMember
+    addMember,
+    getMembers
 }
