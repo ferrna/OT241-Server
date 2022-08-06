@@ -7,4 +7,5 @@ const postActivity = [
   createActivity,
 ];
 
+
 module.exports = { postActivity };

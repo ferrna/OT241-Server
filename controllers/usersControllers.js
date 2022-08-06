@@ -21,21 +21,32 @@ const createUser = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { firstName, lastName, email, password } = req.body;
+    let { firstName, lastName, email, password,roleId } = req.body;
 
     let myPasswordEncrypt = await encrypt(password);
 
-    await User.create({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: myPasswordEncrypt,
-      roleId: 2,
+    let myUser1 = await User.findOne({
+      where: { email },
     });
 
+    if(myUser1){
+      res.json("EL USUARIO YA EXISTE")
+    }else{
+      let myUser = await User.create({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: myPasswordEncrypt,
+        roleId: roleId || 2 ,
+      });
+
+      req.url = "/login";
+      next();
+    }
+
+
     // login user when register
-    req.url = "/login";
-    next();
+    //res.json(myUser)
   } catch (err) {
     console.log(err);
   }
