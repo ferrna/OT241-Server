@@ -3,8 +3,8 @@ const router = express.Router();
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-const { addMember } = require("../controllers/membersController")
-const {uploadImageS3, getImageFromS3} = require('../helpers/S3AWService')
+const { addMember, getMembers } = require("../controllers/membersController")
+const { uploadImageS3 } = require('../helpers/S3AWService')
 
 
 router
@@ -25,6 +25,14 @@ router
                 res.send({message:"Nombre del usuario debe existir y ser un string"})
             }
             
+        } catch (e) {
+            console.log(e)
+        }
+    })
+    .get(async(req, res) => {
+        try {
+            const result = await getMembers()
+            res.send(result)
         } catch (e) {
             console.log(e)
         }
