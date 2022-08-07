@@ -47,10 +47,16 @@ const createCategory = (req, res) => {
 }
 
 const updateCategory = (req, res) => {
-  categories.update({...req.body})
+  categories.update(
+    { ...req.body },
+    {
+      where: {
+        id: req.params.id,
+      },
+    })
   .then((update) => {
     if (update[0] === 0) {
-      const error = "There is not an activity with that ID";
+      const error = {type: 'Not found', message: "There is not an activity with that ID"};
       throw error;
     } else {
       const category = categories.findByPk(req.params.id);
@@ -61,6 +67,9 @@ const updateCategory = (req, res) => {
     return res.json(category)
   })
   .catch( err => {
+    if (err.type === 'Not found') {
+      return res.status(400).json(err.message);
+    }
     if (err.errors[0].validatorKey === "notEmpty") {
       switch (err.errors[0].path) {
         case 'name':
