@@ -12,6 +12,9 @@ const getCategories = (req, res) => {
   })
 }
 
+const createCategory = (req, res) => {}
+
 module.exports = {
-  getCategories
+  getCategories,
+  createCategory
 }
