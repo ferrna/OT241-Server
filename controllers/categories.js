@@ -1,11 +1,11 @@
-const { Categories } = require('../models')
+const { categories } = require('../models')
 
 const getCategories = (req, res) => {
-  const categories = Categories.FindAll({
+  categories.findAll({
     attributes: ['name']
   })
-  .then(res => {
-    return res.json(categories)
+  .then(data => {
+    return res.json(data)
   })
   .catch(err => {
     return err
