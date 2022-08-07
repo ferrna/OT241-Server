@@ -17,8 +17,32 @@ const createCategory = (req, res) => {
   .then( newCategory => {
     return res.json(newCategory)
   })
-  .catch( error => {
-    return error
+  .catch( err => {
+    if (err.errors[0].validatorKey === "notEmpty") {
+      switch (err.errors[0].path) {
+        case 'name':
+          return res.status(400).json("Name cannot be empty");
+        default:
+          break;
+      }
+    } else if (err.errors[0].validatorKey === "is_null") {
+      switch (err.errors[0].path) {
+        case 'name':
+          return res.status(400).json("Name cannot be null");
+        default:
+          break;
+      }
+    } else if (err.errors[0].validatorKey === "is") {
+      switch (err.errors[0].path) {
+        case 'name':
+          return res.status(400).json("Name format is incorrect");
+        default:
+          break;
+      }
+    }
+    else {
+      return res.status(400).json(err)
+    }
   })
 }
 
