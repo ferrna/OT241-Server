@@ -12,7 +12,15 @@ const getCategories = (req, res) => {
   })
 }
 
-const createCategory = (req, res) => {}
+const createCategory = (req, res) => {
+  categories.create({...req.body})
+  .then( newCategory => {
+    return res.json(newCategory)
+  })
+  .catch( error => {
+    return error
+  })
+}
 
 module.exports = {
   getCategories,
