@@ -46,7 +46,10 @@ const createCategory = (req, res) => {
   })
 }
 
+const updateCategory = () => {}
+
 module.exports = {
   getCategories,
-  createCategory
+  createCategory,
+  updateCategory
 }

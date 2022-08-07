@@ -7,12 +7,12 @@ const {
   getCategories,
   createCategory,
   // deleteCategory,
-  // updateCategory
+  updateCategory
 } = controller;
 
 router.get('/', getCategories);
 router.post('/', createCategory);
-// router.put('/:id', updateCategory);
+router.put('/:id', updateCategory);
 // router.delete('/:id', deleteCategory);
 
 module.exports = router;
