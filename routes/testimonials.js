@@ -6,9 +6,13 @@ const router = express.Router();
 const {
   createTestimonial,
   deleteTestimonial,
-  updateTestimonial
+  updateTestimonial,
+  getAllTestimonials,
+  getTestimonialsById
 } = controller;
 
+router.get('/',getAllTestimonials)
+router.get('/:id',getTestimonialsById)
 router.post('/', createTestimonial);
 router.put('/:id', updateTestimonial);
 router.delete('/:id', deleteTestimonial);

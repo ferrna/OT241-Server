@@ -1,5 +1,30 @@
 const { Testimonials } = require('../models');
 
+
+const getTestimonialsById = async (req,res) =>{
+  try{
+    let {id} = req.params
+    
+    let myTestimonial = await Testimonials.findByPk(id)
+
+    res.json(myTestimonial)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+const getAllTestimonials = async (req,res) => {
+  try{
+    let AllTestimonials = await Testimonials.findAll()
+
+    res.json(AllTestimonials)
+  }catch(err){
+    if(err){
+      res.send("Ocurrio un error: ", err)
+    }
+  }
+}
+
 const createTestimonial = async (req,res) => {
   try {
     const { name, imageUrl, content } = req.body
@@ -90,5 +115,7 @@ const deleteTestimonial = async (req,res) => {
 module.exports = {
   createTestimonial,
   deleteTestimonial,
-  updateTestimonial
+  updateTestimonial,
+  getAllTestimonials,
+  getTestimonialsById
 }
