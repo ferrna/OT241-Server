@@ -98,8 +98,11 @@ const updateCategory = (req, res) => {
   })
 }
 
+const deleteCategory = () => {}
+
 module.exports = {
   getCategories,
   createCategory,
-  updateCategory
+  updateCategory,
+  deleteCategory
 }
