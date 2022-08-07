@@ -98,7 +98,22 @@ const updateCategory = (req, res) => {
   })
 }
 
-const deleteCategory = () => {}
+const deleteCategory = (req, res) => {
+  categories.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(deleted => {
+    if (deleted === 0) {
+      throw "There's not a category with the specified ID";
+    }
+    return res.json("Deleted succesfully")
+  })
+  .catch(err => {
+    return res.status(400).json(err)
+  })
+}
 
 module.exports = {
   getCategories,
