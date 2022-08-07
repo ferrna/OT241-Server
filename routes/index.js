@@ -7,6 +7,7 @@ const organization = require("./organizations");
 const testimonials = require("./testimonials");
 const images = require("./images");
 const activities = require("./activities/activities.router");
+const categories = require("./categories")
 const members =  require("./members")
 
 /* GET home page. */
@@ -21,5 +22,6 @@ router.use("/testimonials", testimonials);
 router.use("/images", images);
 router.use("/activities", activities);
 router.use("/members", members);
+router.use("/categories", categories)
 
 module.exports = router;
