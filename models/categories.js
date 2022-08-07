@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   categories.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true,
+        is: /^[a-z ,.'-]+$/i
+      },
+      allowNull: false
+    },
     deletedAt: DataTypes.STRING
   }, {
     sequelize,

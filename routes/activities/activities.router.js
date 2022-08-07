@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { postActivity } = require("./controllers/post.controller");
-const { findActivityById } = require("../../controllers/activitiesControllers");
+const { findActivityById, updateActivity } = require("../../controllers/activitiesControllers");
 
 const activitiesRouter = Router();
 
