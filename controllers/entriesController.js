@@ -5,7 +5,7 @@ let { body, validationResult } = require("express-validator");
 
 const findNewsById = async (id) => {
   try {
-    const news = await Entries.findAll({
+    const news = await Entries.findOne({
       where: {
         id: id,
       },
@@ -26,7 +26,7 @@ const findEntryByTypeNews = async () => {
     });
 
     const typeMap = type.map((item) => {
-      return { name: item.name, image: item.image, createdAt: item.createdAt };
+      return { id: item.id, name: item.name, image: item.image, createdAt: item.createdAt };
     });
 
     return typeMap;
@@ -42,8 +42,11 @@ const deleteNewsById = async (id) => {
         id: id,
       },
     });
+
+    return borrado
   } catch (error) {
     console.log(error);
+    return error
   }
 };
 
@@ -73,27 +76,30 @@ const createEntry = async (req, res, next) => {
   }
 };
 
-const updateEntry = (req,res) => {
-  Entries.update({ ...req.body }, {
-    where: {
-      id: req.params.id
+const updateEntry = (req, res) => {
+  Entries.update(
+    { ...req.body },
+    {
+      where: {
+        id: req.params.id,
+      },
     }
-  })
-  .then((update) => {
-    if (update[0] === 0) {
-      const error = 'There is not an entry with that ID'
-      throw error
-    } else {
-      const entry = Entries.findByPk(req.params.id)
-      return entry
-    }
-  })
-  .then((entry) => {
-    return res.json(entry)
-  })
-  .catch((error) => {
-    return res.status(400).json(error)
-  })
-}
+  )
+    .then((update) => {
+      if (update[0] === 0) {
+        const error = "There is not an entry with that ID";
+        throw error;
+      } else {
+        const entry = Entries.findByPk(req.params.id);
+        return entry;
+      }
+    })
+    .then((entry) => {
+      return res.json(entry);
+    })
+    .catch((error) => {
+      return res.status(400).json(error);
+    });
+};
 
 module.exports = { findNewsById, findEntryByTypeNews, deleteNewsById, createEntry, updateEntry };
