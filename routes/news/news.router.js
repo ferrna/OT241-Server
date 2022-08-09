@@ -19,7 +19,7 @@ newsRouter
   .delete(async (req, res) => {
     const { id } = req.params;
     const deleteNews = await deleteNewsById(id);
-    res.send(deleteNews);
+    res.send({deleted: deleteNews});
   })
   .put(updateEntry);
 

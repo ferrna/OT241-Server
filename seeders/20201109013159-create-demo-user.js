@@ -8,7 +8,7 @@ module.exports = {
         {
           firstName: "Usuario",
           lastName: "Demo",
-          email: "test@test.com",
+          email: "test@test2.com",
           // Important: Password not encrypted yet!
           password: "123456",
           roleId: 1,
