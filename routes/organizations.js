@@ -11,7 +11,7 @@ router
             image: "",
             phone: "",
             address: "",
-            welcomeText: `Hola bienvenido organización ${organization}`
+            welcomeText: `Hola bienvenido organización ${organization}`,
         })
     })
 
