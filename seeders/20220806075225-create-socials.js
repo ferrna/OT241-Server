@@ -27,6 +27,13 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: "Twitter",
+          url:
+            "https://www.twitter.com/somosmas",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
