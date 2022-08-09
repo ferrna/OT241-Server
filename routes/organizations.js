@@ -1,18 +1,17 @@
 var express = require('express');
 var router = express.Router();
+const {getOrganizationPublic, getSocials} = require("../controllers/organizationController")
 
 // Get Organizations Route
 router
     .route('/:organization/public')
-    .get((req, res) => {
+    .get(async (req, res) => {
         const {organization} = req.params
-        res.send({
-            name: "",
-            image: "",
-            phone: "",
-            address: "",
-            welcomeText: `Hola bienvenido organización ${organization}`
-        })
+        console.log(organization)
+        const publicResult =  await getOrganizationPublic(organization)
+        const socialResult = await getSocials()
+        const data = {...publicResult, socialResult}
+        res.send(data)
     })
 
 
