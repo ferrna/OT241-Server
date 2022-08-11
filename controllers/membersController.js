@@ -17,7 +17,34 @@ const getMembers = async () => {
     return allMembers
   }
 
+const editMember = async (name,image,id) =>{
+    let memberExist = await members.findAll({
+      where: {
+        id
+      }
+    })
+    console.log(memberExist)
+
+    if(memberExist.length === 0) throw Error('El Usurio no existe, porfavor crealo.')
+
+    const newMember = await members.update({name,image},{
+      where:{
+        id
+      }
+    })
+
+    if(newMember[0] === 1) {
+      return {
+        id,
+        name,
+        image
+      }
+    }
+}  
+
+
 module.exports = {
     addMember,
-    getMembers
+    getMembers,
+    editMember
 }
