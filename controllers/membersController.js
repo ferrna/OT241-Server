@@ -40,11 +40,25 @@ const editMember = async (name,image,id) =>{
         image
       }
     }
-}  
+} 
+
+const deleteMember = async (id) => {
+  let memberExist = await members.findAll({
+    where: {
+      id
+    }
+  })
+
+  if(memberExist.length === 0) throw Error('El Usurio no existe, porfavor crealo.')
+
+  await members.destroy({where:{id}})
+
+}
 
 
 module.exports = {
     addMember,
     getMembers,
-    editMember
+    editMember,
+    deleteMember
 }
