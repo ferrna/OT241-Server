@@ -1,9 +1,10 @@
 const {Contacts} = require('../models');
 
-const addContacts =  async (name, email) => {
+const addContacts =  async (name, email, message) => {
      const newContact = await Contacts.create({
         name,
         email,
+        message
       });
 
       return newContact

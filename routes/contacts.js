@@ -8,9 +8,9 @@ const axios = require("axios")
 router
     .route("/")
     .post( async (req, res) => {
-        const {name, email} = req.body
+        const {name, email, message} = req.body
         if (name && email) {
-            const newContact = await addContacts(name, email)
+            const newContact = await addContacts(name, email, message)
             const {data} = await axios.post(`http://localhost:3000/mails/${email}`)
             res.send({
                 newContact,
