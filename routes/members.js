@@ -3,7 +3,7 @@ const router = express.Router();
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-const { addMember, getMembers,editMember } = require("../controllers/membersController")
+const { addMember, getMembers,editMember,deleteMember } = require("../controllers/membersController")
 const { uploadImageS3 } = require('../helpers/S3AWService')
 
 
@@ -58,6 +58,21 @@ router
             
         } catch (e) {
             console.log(e)
+            let error = e
+            if(error){
+                res.status(404)
+                res.send({error: "The user not exist"})
+            }
+        }
+    })
+    .delete(async (req,res) => {
+        try{
+            let {id} = req.params
+
+            deleteMember(id)
+
+            res.json({message: 'User Delete success'})
+        }catch(err){
             let error = e
             if(error){
                 res.status(404)
