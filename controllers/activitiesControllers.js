@@ -1,7 +1,6 @@
 const { activities } = require("../models");
 let { body, validationResult } = require("express-validator");
 
-
 const createActivity = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -59,8 +58,39 @@ const findActivityById = async (id) => {
   return activityById;
 };
 
+const getActivities = async (req, res, next) => {
+  activities
+    .findAll()
+    .then((data) => {
+      return res.json(data);
+    })
+    .catch((err) => {
+      return res.status(401).json({ msg: err });
+    });
+};
+
+const deleteActivity = (req, res) => {
+  activities
+    .destroy({
+      where: {
+        id: req.params.id,
+      },
+    })
+    .then((deleted) => {
+      if (deleted === 0) {
+        throw "There's not a category with the specified ID";
+      }
+      return res.json("Deleted succesfully");
+    })
+    .catch((err) => {
+      return res.status(400).json(err);
+    });
+};
+
 module.exports = {
   createActivity,
   updateActivity,
   findActivityById,
+  getActivities,
+  deleteActivity,
 };

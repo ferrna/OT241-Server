@@ -26,7 +26,7 @@ const findEntryByTypeNews = async () => {
     });
 
     const typeMap = type.map((item) => {
-      return { id: item.id, name: item.name, image: item.image, createdAt: item.createdAt };
+      return { id: item.id, name: item.name, content: item.content, image: item.image, createdAt: item.createdAt };
     });
 
     return typeMap;
