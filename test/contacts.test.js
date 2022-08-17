@@ -7,7 +7,7 @@ describe("GET /contacts", () => {
         const response = await request(app).get("/contacts").send()
         expect(response.statusCode).toBe(401)
     })
-    test("Should respond with a 200 using a token and", async () => {
+    test("Should respond with a 200 using a token", async () => {
         const response =  await request(app).get("/contacts").set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJmaXJzdE5hbWUiOiJVc3VhcmlvIiwibGFzdE5hbWUiOiJEZW1vIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwicGFzc3dvcmQiOiIxMjM0IiwiaW1hZ2UiOiJodHRwczovL3d3dy5kZXNpZ25ldm8uY29tL3Jlcy90ZW1wbGF0ZXMvdGh1bWJfc21hbGwvY29sb3JmdWwtaGFuZC1hbmQtd2FybS1jb21tdW5pdHkucG5nIiwicm9sZUlkIjoiMSJ9.6LgJGqxKgHt8ITOHLI2Ea4H7QOEfJII37AWEYIKlUHk')
         expect(response.statusCode).toBe(200)
     })

@@ -16,13 +16,13 @@ router
             if (typeof name === 'string') {
                 const newMember =  await addMember(name, image.filename)
                 const upload = await uploadImageS3(image)
-                res.send({
+                res.status(201).send({
                     newMember,
                     imagePath: `images/${upload.Key}`
                 })
                 
             }else {
-                res.send({message:"Nombre del usuario debe existir y ser un string"})
+                res.status(400).send({message:"Nombre del usuario debe existir y ser un string"})
             }
             
         } catch (e) {
@@ -47,13 +47,13 @@ router
             if (typeof name === 'string') {
                 const newMember =  await editMember(name, image.filename,id)
                 const upload = await uploadImageS3(image)
-                res.send({
+                res.status(200).send({
                     newMember,
                     imagePath: `images/${upload.Key}`
                 })
                 
             }else {
-                res.send({message:"Nombre del usuario debe existir y ser un string"})
+                res.status(401).send({message:"Nombre del usuario debe existir y ser un string"})
             }
             
         } catch (e) {
@@ -69,14 +69,13 @@ router
         try{
             let {id} = req.params
 
-            deleteMember(id)
+            await deleteMember(id)
 
-            res.json({message: 'User Delete success'})
+            res.status(200).json({message: 'User Delete success'})
         }catch(err){
-            let error = e
+            let error = err
             if(error){
-                res.status(404)
-                res.send({error: "The user not exist"})
+                res.status(404).send({error: "The user not exist"})
             }
         }
     })
