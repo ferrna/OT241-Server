@@ -23,11 +23,11 @@ const sendMail = async (req, res, next) => {
       .send(message)
       .then((response) => {
         console.log("Email has been send");
-        res.json({ msg: "Email sended succesfully" });
+        res.status(200).json({ msg: "Email sended succesfully" });
       })
       .catch((error) => {
         console.log(error, "err1");
-        res.json({ msg: "Could not send email, an error has occurred" });
+        res.status(400).json({ msg: "Could not send email, an error has occurred" });
       });
   } catch (error) {
     console.log(error, "err2");
