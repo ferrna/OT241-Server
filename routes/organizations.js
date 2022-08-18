@@ -6,12 +6,21 @@ const {getOrganizationPublic, getSocials} = require("../controllers/organization
 router
     .route('/:organization/public')
     .get(async (req, res) => {
-        const {organization} = req.params
-        console.log(organization)
-        const publicResult =  await getOrganizationPublic(organization)
-        const socialResult = await getSocials()
-        const data = {...publicResult, socialResult}
-        res.send(data)
+        try {
+            const {organization} = req.params
+            const publicResult =  await getOrganizationPublic(organization)
+            if (publicResult != "") {
+                const socialResult = await getSocials()
+                const data = {publicResult, socialResult}
+                res.status(200).send(data)  
+            } else {
+                res.status(404).send({message: "No se ha encontrado organización"})
+            }
+            
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
     })
 
 
