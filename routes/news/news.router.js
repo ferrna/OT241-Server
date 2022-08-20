@@ -40,5 +40,10 @@ newsRouter
     }
   })
   .post(upload.single('image'),createEntry);
+/*
+newsRouter.route("/:id").get(findNewsById).delete(deleteNewsById).put(updateEntry);
+
+newsRouter.route("/").get(findEntryByTypeNews).post(postNews);
+*/
 
 module.exports = newsRouter;
