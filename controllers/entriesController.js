@@ -1,63 +1,76 @@
-const { Entries } = require("../models");
+const { Entries, categories } = require("../models");
 let { body, validationResult } = require("express-validator");
 
 //Entries functions
 
-const findNewsById = async (id) => {
+const findNewsById = async (req, res) => {
+  const { id } = req.params;
+
   try {
     const news = await Entries.findOne({
       where: {
         id: id,
       },
     });
-
-    return news.dataValues;
+    if (news) {
+      return res.status(200).json({ news: news.dataValues });
+    } else {
+      const error = "There is not an entry with that ID";
+      throw new Error(error);
+    }
   } catch (error) {
-    console.log(error);
+    return res.status(400).json({ msg: error.message });
   }
 };
 
-const findEntryByTypeNews = async () => {
+const findEntryByTypeNews = async (req, res) => {
   try {
     const type = await Entries.findAll({
       where: {
         type: "news",
       },
     });
-
     const typeMap = type.map((item) => {
-      return { id: item.id, name: item.name, content: item.content, image: item.image, createdAt: item.createdAt };
+      return {
+        id: item.id,
+        name: item.name,
+        content: item.content,
+        image: item.image,
+        createdAt: item.createdAt,
+      };
     });
 
-    return typeMap;
+    return res.status(200).json(typeMap);
   } catch (error) {
-    console.log(error);
+    return res.status(400).json({ msg: error.message });
   }
 };
 
-const deleteNewsById = async (id) => {
+const deleteNewsById = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const borrado = await Entries.destroy({
+    const deleteNews = await Entries.destroy({
       where: {
         id: id,
       },
     });
 
-    return borrado
+    return res.status(200).json({ deleted: deleteNews });
   } catch (error) {
-    console.log(error);
-    return error
+    return res.status(400).json({ msg: error.message });
   }
 };
 
-const createEntry = async (req, res, next) => {
+const createEntry = async (req, res) => {
   try {
+    /* Validation body errors */
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, content, image = "", category, type } = req.body;
 
+    const { name, content, image = "", category, type } = req.body;
     let newEntry = await Entries.create({
       name,
       content,
@@ -66,40 +79,42 @@ const createEntry = async (req, res, next) => {
     });
 
     if (category) {
-      const categoryDb = await Category.findOne({ where: { name: category } });
+      const categoryDb = await categories.findOne({ where: { name: category } });
       await newEntry.addCategory([categoryDb]);
     }
-
-    return res.json(newEntry);
-  } catch (err) {
-    console.log(err);
+    return res.status(200).json(newEntry.dataValues);
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
   }
 };
 
-const updateEntry = (req, res) => {
-  Entries.update(
-    { ...req.body },
-    {
-      where: {
-        id: req.params.id,
-      },
+const updateEntry = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exists = await Entries.findByPk(id);
+    if (!exists) {
+      const error = "There is not an entry with that ID";
+      throw new Error(error);
     }
-  )
-    .then((update) => {
-      if (update[0] === 0) {
-        const error = "There is not an entry with that ID";
-        throw error;
-      } else {
-        const entry = Entries.findByPk(req.params.id);
-        return entry;
+
+    const update = await Entries.update(
+      { ...req.body },
+      {
+        where: {
+          id: id,
+        },
       }
-    })
-    .then((entry) => {
-      return res.json(entry);
-    })
-    .catch((error) => {
-      return res.status(400).json(error);
-    });
+    );
+    if (update) {
+      const updatedNews = await Entries.findByPk(id);
+      return res.status(200).json(updatedNews);
+    } else {
+      const error = "Error: News could not be updated";
+      throw new Error(error);
+    }
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
 };
 
 module.exports = { findNewsById, findEntryByTypeNews, deleteNewsById, createEntry, updateEntry };

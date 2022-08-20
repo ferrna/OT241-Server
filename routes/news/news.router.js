@@ -4,35 +4,13 @@ const {
   findNewsById,
   deleteNewsById,
   findEntryByTypeNews,
-  updateEntry
+  updateEntry,
 } = require("../../controllers/entriesController");
 
 const newsRouter = Router();
 
-newsRouter
-  .route("/:id")
-  .get(async (req, res) => {
-    const { id } = req.params;
-    const news = await findNewsById(id);
-    res.send({ news });
-  })
-  .delete(async (req, res) => {
-    const { id } = req.params;
-    const deleteNews = await deleteNewsById(id);
-    res.send({deleted: deleteNews});
-  })
-  .put(updateEntry);
+newsRouter.route("/:id").get(findNewsById).delete(deleteNewsById).put(updateEntry);
 
-newsRouter
-  .route("/")
-  .get(async (req, res) => {
-    try {
-      const type = await findEntryByTypeNews();
-      res.send(type);
-    } catch (error) {
-      console.log(error);
-    }
-  })
-  .post(postNews);
+newsRouter.route("/").get(findEntryByTypeNews).post(postNews);
 
 module.exports = newsRouter;
