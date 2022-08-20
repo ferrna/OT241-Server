@@ -1,10 +1,12 @@
 const { Router } = require("express");
-const { getAllUsers, deleteUser } = require("../../controllers/usersControllers");
+const { getAllUsers, deleteUser,getUserById } = require("../../controllers/usersControllers");
 const isAdmin = require("../common/isAdmin");
 
 const users = Router();
 
 users.route("/all").get([isAdmin, getAllUsers]);
+
+users.route("/:id").get(getUserById)
 
 users.route("/:id").delete(async (req, res) => {
   try {
