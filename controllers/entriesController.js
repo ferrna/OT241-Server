@@ -1,6 +1,6 @@
 const { Entries } = require("../models");
 let { body, validationResult } = require("express-validator");
-
+const {uploadImageS3, getImageFromS3} = require('../helpers/S3AWService')
 //Entries functions
 
 const findNewsById = async (id) => {
@@ -52,23 +52,26 @@ const deleteNewsById = async (id) => {
 
 const createEntry = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    const { name, content, image = "", category, type } = req.body;
-
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   console.log(errors)
+    //   return res.status(400).json({ errors: errors.array() });
+    // }// volver de ser necesario
+    const { name, content } = req.body;
+    const image = req.file
+    console.log(name, content, image)
+    await uploadImageS3(image)
     let newEntry = await Entries.create({
       name,
       content,
-      image,
-      type,
+      image: image.filename,
+      type: "news",
     });
 
-    if (category) {
-      const categoryDb = await Category.findOne({ where: { name: category } });
-      await newEntry.addCategory([categoryDb]);
-    }
+    // if (category) {
+    //   const categoryDb = await Category.findOne({ where: { name: category } });
+    //   await newEntry.addCategory([categoryDb]);
+    // }
 
     return res.json(newEntry);
   } catch (err) {
@@ -76,30 +79,38 @@ const createEntry = async (req, res, next) => {
   }
 };
 
-const updateEntry = (req, res) => {
-  Entries.update(
-    { ...req.body },
-    {
-      where: {
-        id: req.params.id,
-      },
+const updateEntry = async (req, res) => {
+  try {
+    const image  = req.file
+    const { name, content } = req.body
+    console.log(image, name, content)
+    if (image !== undefined) {
+      await uploadImageS3(image)
+      const response = await Entries.update(
+        { image: image.filename, name, content },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      )
+      res.status(200).json(response)
+      
+    } else {
+      const response = await Entries.update(
+        { name, content },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      )
+      res.status(200).json(response)
     }
-  )
-    .then((update) => {
-      if (update[0] === 0) {
-        const error = "There is not an entry with that ID";
-        throw error;
-      } else {
-        const entry = Entries.findByPk(req.params.id);
-        return entry;
-      }
-    })
-    .then((entry) => {
-      return res.json(entry);
-    })
-    .catch((error) => {
-      return res.status(400).json(error);
-    });
+    
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 module.exports = { findNewsById, findEntryByTypeNews, deleteNewsById, createEntry, updateEntry };

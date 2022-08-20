@@ -1,11 +1,17 @@
 const { Router } = require("express");
-const { postNews } = require("./controllers/post.controller");
+// const { postNews } = require("./controllers/post.controller");
 const {
   findNewsById,
   deleteNewsById,
   findEntryByTypeNews,
-  updateEntry
+  updateEntry,
+  createEntry
 } = require("../../controllers/entriesController");
+
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
+const {uploadImageS3, getImageFromS3} = require('../../helpers/S3AWService')
 
 const newsRouter = Router();
 
@@ -21,7 +27,7 @@ newsRouter
     const deleteNews = await deleteNewsById(id);
     res.send({deleted: deleteNews});
   })
-  .put(updateEntry);
+  .put(upload.single('image'), updateEntry);
 
 newsRouter
   .route("/")
@@ -33,6 +39,6 @@ newsRouter
       console.log(error);
     }
   })
-  .post(postNews);
+  .post(upload.single('image'),createEntry);
 
 module.exports = newsRouter;
