@@ -52,6 +52,24 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const getUserById = async(req,res) => {
+  try{
+    let {id} = req.params
+
+    let myUser = await User.findOne({
+      where: {
+        id
+      }
+    })
+
+    console.log(myUser)
+    if(myUser) res.json(myUser)
+    if(!myUser) throw new Error('Id not exist')
+  }catch(err){
+    res.status(404).send('id not exist')
+  }
+}
+
 const getOneUser = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -100,6 +118,7 @@ const deleteUser = async (id) => {
 };
 
 module.exports = {
+  getUserById,
   getAllUsers,
   createUser,
   getOneUser,
