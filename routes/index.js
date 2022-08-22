@@ -10,6 +10,7 @@ const activities = require("./activities/activities.router");
 const categories = require("./categories")
 const members =  require("./members")
 const socials = require('../routes/socialMedia/socialRoutes.js')
+const slides = require("./slides")
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -25,6 +26,7 @@ router.use("/activities", activities);
 router.use("/members", members);
 router.use("/categories", categories)
 router.use("/socialmedia",socials)
+router.use("/slides", slides)
 
 
 module.exports = router;

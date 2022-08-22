@@ -1,10 +1,9 @@
 const { Entries, categories } = require("../models");
 let { body, validationResult } = require("express-validator");
-const {uploadImageS3, getImageFromS3} = require('../helpers/S3AWService')
+const { uploadImageS3 } = require('../helpers/S3AWService')
 //Entries functions
 
-const findNewsById = async (req, res) => {
-  const { id } = req.params;
+const findNewsById = async (id) => {
 
   try {
     const news = await Entries.findOne({
@@ -13,17 +12,17 @@ const findNewsById = async (req, res) => {
       },
     });
     if (news) {
-      return res.status(200).json({ news: news.dataValues });
+      return news ;
     } else {
       const error = "There is not an entry with that ID";
       throw new Error(error);
     }
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return { msg: error.message };
   }
 };
 
-const findEntryByTypeNews = async (req, res) => {
+const findEntryByTypeNews = async () => {
   try {
     const type = await Entries.findAll({
       where: {
@@ -40,14 +39,13 @@ const findEntryByTypeNews = async (req, res) => {
       };
     });
 
-    return res.status(200).json(typeMap);
+    return typeMap;
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return { msg: error.message };
   }
 };
 
-const deleteNewsById = async (req, res) => {
-  const { id } = req.params;
+const deleteNewsById = async () => {
 
   try {
     const deleteNews = await Entries.destroy({
@@ -56,9 +54,9 @@ const deleteNewsById = async (req, res) => {
       },
     });
 
-    return res.status(200).json({ deleted: deleteNews });
+    return { deleted: deleteNews };
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return { msg: error.message };
   }
 };
 
@@ -85,7 +83,7 @@ const createEntry = async (req, res) => {
     //   await newEntry.addCategory([categoryDb]);
     // }
 
-    return res.json(newEntry);
+    return newEntry;
   } catch (err) {
     console.log(err);
   }
