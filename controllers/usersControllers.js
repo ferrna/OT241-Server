@@ -89,7 +89,7 @@ const getOneUser = async (req, res, next) => {
     }
 
     if (checkPassword) {
-      let myToken = createToken(myUser.dataValues.id);
+      let myToken = createToken(myUser.dataValues);
       res.json({
         data: myUser,
         token: myToken,
