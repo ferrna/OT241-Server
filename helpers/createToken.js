@@ -1,9 +1,9 @@
 let jwt = require('jsonwebtoken')
 
-let createToken = (idUser) => {
+let createToken = (user) => {
     const payload = {
         check: true,
-        id: idUser
+        ...user
     }
     const token = jwt.sign(payload,'juan123',{
         expiresIn:'7d'
