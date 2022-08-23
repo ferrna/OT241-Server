@@ -12,9 +12,9 @@ router
     .post(upload.single('image'), async (req, res) => {
         try {
             const image = req.file
-            const {name} = req.body
+            const {name, role} = req.body
             if (typeof name === 'string') {
-                const newMember =  await addMember(name, image.filename)
+                const newMember =  await addMember(name, role, image.filename)
                 const upload = await uploadImageS3(image)
                 res.status(201).send({
                     newMember,

@@ -2,9 +2,10 @@ const {members} = require("../models");
 
 
 //añadir nuevos miembros
-const addMember =  async (name, image) => {
+const addMember =  async (name, role, image) => {
     const newMember = await members.create({
        name,
+       role,
        image,
      });
 
