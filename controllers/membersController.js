@@ -13,10 +13,19 @@ const addMember =  async (name, role, image) => {
 
 }
 
+const getMembersById = async (id) => {
+  const member = await members.findOne({
+    where:{
+      id
+    }
+  });
+  return member.dataValues
+}
+
 const getMembers = async () => {
     const allMembers = await members.findAll();
     return allMembers
-  }
+}
 
 const editMember = async (name,image,id) =>{
     let memberExist = await members.findAll({
@@ -61,5 +70,6 @@ module.exports = {
     addMember,
     getMembers,
     editMember,
-    deleteMember
+    deleteMember,
+    getMembersById
 }
