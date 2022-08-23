@@ -45,7 +45,7 @@ const findEntryByTypeNews = async () => {
   }
 };
 
-const deleteNewsById = async () => {
+const deleteNewsById = async (id) => {
 
   try {
     const deleteNews = await Entries.destroy({
