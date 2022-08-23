@@ -117,10 +117,30 @@ const deleteUser = async (id) => {
   }
 };
 
+const updateUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updated = await User.update({...req.body},{
+      where: {
+        id: id,
+      },
+    });
+    if(updated) {
+      return res.status(200).json(updated)
+    } else {
+      const error = "Ha ocurrido un error al actulizar el usuario"
+      throw new Error(error)
+    }
+  } catch (error) {
+    return res.status(400).json({msg: error.message})
+  }
+};
+
 module.exports = {
   getUserById,
   getAllUsers,
   createUser,
   getOneUser,
   deleteUser,
+  updateUserById
 };
