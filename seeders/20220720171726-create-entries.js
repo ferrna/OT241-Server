@@ -14,7 +14,7 @@ module.exports = {
           /* categoryId: 1, */
           type: "news",
           image:
-            "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
+            "8d03d9fdc20331d99e9826a72c4b6448",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -25,7 +25,7 @@ module.exports = {
           /* categoryId: 1, */
           type: "news",
           image:
-            "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
+            "8d03d9fdc20331d99e9826a72c4b6448",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -36,7 +36,7 @@ module.exports = {
           /* categoryId: 1, */
           type: "news",
           image:
-            "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
+            "8d03d9fdc20331d99e9826a72c4b6448",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -47,7 +47,7 @@ module.exports = {
           /* categoryId: 1, */
           type: "news",
           image:
-            "https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png",
+            "8d03d9fdc20331d99e9826a72c4b6448",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
