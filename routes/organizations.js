@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {getOrganizationPublic, getSocials} = require("../controllers/organizationController")
+const {getOrganizationPublic, getSocials,updateOrganization} = require("../controllers/organizationController")
 
 // Get Organizations Route
 router
@@ -20,6 +20,22 @@ router
         } catch (error) {
             console.log(error)
             res.send(error)
+        }
+    })
+router
+    .route('/edit/:id')
+    .put(async (req,res)=>{
+        try{
+            let {id} = req.params
+
+            let {name,image,phone,address,email,welcomeTitle,welcomeText,welcomeImage} = req.body
+
+            let myOrganization = await updateOrganization(id,{name,image,phone,address,email,welcomeTitle,welcomeText,welcomeImage})
+
+            if(myOrganization) res.json({message:'Organization has ready update.'})
+        
+        }catch(err){
+            console.log(err)
         }
     })
 

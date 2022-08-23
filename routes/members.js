@@ -3,7 +3,7 @@ const router = express.Router();
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-const { addMember, getMembers,editMember,deleteMember } = require("../controllers/membersController")
+const { addMember, getMembers,editMember,deleteMember,getMembersById } = require("../controllers/membersController")
 const { uploadImageS3 } = require('../helpers/S3AWService')
 
 
@@ -39,6 +39,18 @@ router
     })
 router
     .route('/:id')
+    .get(async (req,res)=>{
+        try{
+            const {id} = req.params
+
+            let myMember = await getMembersById(id)
+
+            res.json(myMember)
+
+        }catch(err){
+            console.log(err)
+        }
+    })
     .put(upload.single('image'), async (req, res) => {
         try {
             const {id} = req.params
