@@ -70,46 +70,11 @@ const getUserById = async(req,res) => {
   }
 }
 
-<<<<<<< HEAD
-const createUser = async (req,res,next) => {
-    try{
-        const errors = validationResult(req)
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors:errors.array()})
-        }
-    
-        let {firstName,lastName,email,password} = req.body
-        
-        let myUser = await User.findOne({
-            where:{email}
-        })
-
-        let myPasswordEncrypt = await encrypt(password) 
-        
-        if(myUser != null){
-            return res.status(400).send({errors:'The email already register.'})
-        }else{
-            let myNewUser = await User.create({
-                firstName : firstName,
-                lastName : lastName,
-                email : email,
-                password : myPasswordEncrypt,
-                roleId : 2
-            })
-            delete myNewUser.password
-            return res.json(myNewUser)
-        }
-        
-
-    }catch(err){
-        console.log(err)
-=======
 const getOneUser = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
->>>>>>> dev
     }
 
     let { email, password } = req.body;
@@ -118,38 +83,9 @@ const getOneUser = async (req, res, next) => {
     });
     let checkPassword = await compare(password, myUser.password);
 
-<<<<<<< HEAD
-        let {email, password} = req.body
-       
-        let myUser = await User.findOne({
-            where:{email}
-        })
-        let checkPassword = await compare(password, myUser.password)
-
-        if(!myUser){
-            res.status(404)
-            res.json({text:'Usuario no encontrado'})
-        }
-        
-        if(checkPassword){
-            let myToken = createToken(email)
-            res.json({
-                data: myUser,
-                token: myToken
-            })
-        }else{
-            res.status(404)
-            res.json({text:'Contraseña incorrecta'})
-        }
-    }catch(err){
-        console.log(err)
-        res.status(404)
-        res.json({ok:false})
-=======
     if (!myUser) {
       res.status(404);
       res.json({ text: "Usuario no encontrado" });
->>>>>>> dev
     }
 
     if (checkPassword) {
