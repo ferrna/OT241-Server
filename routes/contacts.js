@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { addContacts, getContacts } = require("../controllers/contactsController");
 const isAdmin = require("./common/isAdmin");
-const axios = require("axios")
+const { sendAppreciationMail } = require("./mails/controllers/post.controller");
 
 
 router
@@ -11,18 +11,17 @@ router
         const {name, email, message} = req.body
         if (name && email) {
             const newContact = await addContacts(name, email, message)
-            const {data} = await axios.post(`http://localhost:3000/mails/${email}`)
+            const { msg, status } = await sendAppreciationMail(email)
             res.send({
                 newContact,
                 message: "Se ha agregado un nuevo contacto",
-                mailResponse: data
+                mailResponse: { msg, status }
             })
-        }else {
+        } else {
             res.send({
                 message: "Faltan los datos name y/o email"
             })
         }
-
     })
     .get(isAdmin, async(req, res) => {
         try {

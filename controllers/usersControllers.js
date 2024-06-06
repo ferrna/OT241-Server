@@ -1,7 +1,6 @@
 let { User } = require("../models");
-let { body, validationResult } = require("express-validator");
+let { validationResult } = require("express-validator");
 let { encrypt, compare } = require("../helpers/handleEncrypt.js");
-let jwt = require("jsonwebtoken");
 
 let createToken = require("../helpers/createToken.js");
 
@@ -11,7 +10,7 @@ const getAllUsers = async (req, res, next) => {
     return res.json(allUsers);
   } catch (error) {
     console.log(error);
-    res.json({ msg: "Could not get data, an error has occurred" });
+    res.json({ message: "Could not get data, an error has occurred" });
   }
 };
 
@@ -112,8 +111,11 @@ const deleteUser = async (id) => {
         id: id,
       },
     });
+    if(!borrado) throw new Error('error deleting user')
+    return res.status(200).json(borrado)
   } catch (error) {
     console.log(error);
+    return res.status(400).json({message: error.message})
   }
 };
 
@@ -132,7 +134,7 @@ const updateUserById = async (req, res) => {
       throw new Error(error)
     }
   } catch (error) {
-    return res.status(400).json({msg: error.message})
+    return res.status(400).json({message: error.message})
   }
 };
 

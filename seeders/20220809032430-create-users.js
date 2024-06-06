@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
+/* TODO: change '12345678' hashed pass, this on is hashed with secret 'juan123' */
 var password = "$2a$10$xuyIkqKznI3hEE4N/i0SI.2PASpjFGgHhRHy2zP2AT9Kj6gIMjFAS"
 
 const image =

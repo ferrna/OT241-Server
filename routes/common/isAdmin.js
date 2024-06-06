@@ -11,10 +11,10 @@ const isAdmin = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, "juan123");
+    const decoded = jwt.verify(token, process.env.PASSWORD_TOKEN);
     req.userId = decoded.id;
-
     const myUser = await User.findByPk(req.userId);
+    
     if (myUser.dataValues.roleId === 1) {
       next();
     } else {
