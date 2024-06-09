@@ -8,6 +8,7 @@ router
     .get(async (req, res) => {
         try {
             const {organization} = req.params
+            console.log(organization)
             const publicResult =  await getOrganizationPublic(organization)
             if (publicResult != "") {
                 const socialResult = await getSocials()

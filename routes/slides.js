@@ -35,15 +35,7 @@ router
             res.status(400).send({message: "Se necesita modificar la imagen y los elementos del Slider"})
         }
 
-        
     })
-
-
-
-
-
-
-
 
 
 module.exports = router;

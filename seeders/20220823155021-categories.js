@@ -1,16 +1,9 @@
 'use strict';
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
      await queryInterface.bulkInsert("categories", [{
       name: "Charla",
       createdAt: new Date(),
@@ -30,11 +23,12 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    return await queryInterface.bulkDelete("categories", {
+      [Op.or]: [
+        { name: "Charla" },
+        { name: "Paseo" },
+        { name: "Clase" },
+      ],
+    });
   }
 };

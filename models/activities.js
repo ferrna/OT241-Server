@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      /* activities.belongsTo(models.Categories, { as: "category" }); */
     }
   };
   activities.init({
-    name: DataTypes.STRING,
+    name: DataTypes.TEXT,
     image: DataTypes.STRING,
-    content: DataTypes.STRING,
+    content: DataTypes.TEXT,
     deletedAt: DataTypes.STRING
   }, {
     sequelize,

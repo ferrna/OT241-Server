@@ -1,4 +1,6 @@
 'use strict';
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -18,11 +20,11 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    return await queryInterface.bulkDelete("Roles", {
+      [Op.or]: [
+        { name: "Admin" },
+        { name: "Standard" },
+      ],
+    });
   }
 };

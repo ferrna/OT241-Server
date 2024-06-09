@@ -16,11 +16,19 @@ npm install
 ```bash
 npx sequelize-cli db:migrate
 ```
+```bash
+npx sequelize-cli db:migrate:undo:all
+npx sequelize-cli db:migrate:undo --name [nombre del archivo de migración]
+```
 
 4. Seeders:
 
 ```bash
 npx sequelize-cli db:seed:all
+```
+```bash
+npx sequelize-cli db:seed:undo:all
+npx sequelize-cli db:seed:undo  Este comando revertirá el último seed ejecutado
 ```
 
 ## Start local server

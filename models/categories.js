@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class categories extends Model {
+  class Categories extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      /*  static associate(models) {
+      Categories.hasMany(models.Entries, { as: "entries" });
+      Categories.hasMany(models.Activities, { as: "activities" });
+    } */
     }
   };
-  categories.init({
+  Categories.init({
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -25,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'categories',
+    modelName: 'Categories',
   });
-  return categories;
+  return Categories;
 };
