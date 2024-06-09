@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const cors = require("cors");
+//const cors = require("cors");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -16,7 +16,13 @@ const organizationRouter = require("./routes/organizations");
 const contactsRouter = require("./routes/contacts");
 
 const app = express();
-app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://ferrna-somosmas.vercel.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
